@@ -1,8 +1,8 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, TooltipProps } from 'recharts'
+import { Bar, BarChart, Label, Rectangle, ReferenceLine, XAxis, YAxis, ResponsiveContainer } from "recharts"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 interface HealthcareData {
   year: number;
@@ -20,99 +20,208 @@ const healthcareData: HealthcareData[] = [
   { year: 2022, contributors: 45300000, recipients: 75000000, costIndex: 112, wageIndex: 105 },
 ]
 
-interface CustomTooltipProps extends TooltipProps<number, string> {
-  active?: boolean;
-  payload?: Array<{
-    name: string;
-    value: number;
-    color: string;
-  }>;
-  label?: string;
-}
-
-const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-background border border-border p-2 rounded-md shadow-md">
-        <p className="font-bold">{`Year: ${label}`}</p>
-        {payload.map((entry, index) => (
-          <p key={index} style={{ color: entry.color }}>
-            {`${entry.name}: ${entry.value.toLocaleString()}`}
-          </p>
-        ))}
-      </div>
-    )
-  }
-  return null
-}
-
 export default function DataDashboard() {
+  const averageContributors = Math.round(healthcareData.reduce((sum, data) => sum + data.contributors, 0) / healthcareData.length)
+  const totalContributors = healthcareData.reduce((sum, data) => sum + data.contributors, 0)
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg md:text-xl">Contributors vs Recipients</CardTitle>
+      <Card className="w-full">
+        <CardHeader className="space-y-0 pb-2">
+          <CardDescription>Contributors vs Recipients</CardDescription>
+          <CardTitle className="text-2xl md:text-4xl tabular-nums">
+            {healthcareData[healthcareData.length - 1].contributors.toLocaleString()}{" "}
+            <span className="text-sm font-normal tracking-normal text-muted-foreground">
+              contributors
+            </span>
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={healthcareData} margin={{ left: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year" />
-              <YAxis tickFormatter={(value: number) => `${value / 1000000}M`} />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Bar dataKey="contributors" fill="#8884d8" name="Contributors" />
-              <Bar dataKey="recipients" fill="#82ca9d" name="Recipients" />
-            </BarChart>
-          </ResponsiveContainer>
+          <ChartContainer
+            config={{
+              contributors: {
+                label: "Contributors",
+                color: "hsl(var(--chart-1))",
+              },
+              recipients: {
+                label: "Recipients",
+                color: "hsl(var(--chart-2))",
+              },
+            }}
+          >
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart
+                data={healthcareData}
+                margin={{
+                  left: -4,
+                  right: -4,
+                }}
+              >
+                <XAxis
+                  dataKey="year"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={4}
+                />
+                <YAxis hide />
+                <Bar
+                  dataKey="contributors"
+                  fill="var(--color-contributors)"
+                  radius={[4, 4, 0, 0]}
+                  fillOpacity={0.6}
+                  activeBar={<Rectangle fillOpacity={0.8} />}
+                />
+                <Bar
+                  dataKey="recipients"
+                  fill="var(--color-recipients)"
+                  radius={[4, 4, 0, 0]}
+                  fillOpacity={0.6}
+                  activeBar={<Rectangle fillOpacity={0.8} />}
+                />
+                <ChartTooltip
+                  content={
+                    <ChartTooltipContent
+                      labelFormatter={(value) => `Year: ${value}`}
+                    />
+                  }
+                  cursor={false}
+                />
+                <ReferenceLine
+                  y={averageContributors}
+                  stroke="hsl(var(--muted-foreground))"
+                  strokeDasharray="3 3"
+                  strokeWidth={1}
+                >
+                  <Label
+                    position="insideBottomLeft"
+                    value="Average Contributors"
+                    offset={10}
+                    fill="hsl(var(--foreground))"
+                  />
+                  <Label
+                    position="insideTopLeft"
+                    value={averageContributors.toLocaleString()}
+                    className="text-lg"
+                    fill="hsl(var(--foreground))"
+                    offset={10}
+                    startOffset={100}
+                  />
+                </ReferenceLine>
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </CardContent>
+        <CardFooter className="flex-col items-start gap-1">
+          <CardDescription>
+            Over the past 5 years, there have been an average of{" "}
+            <span className="font-medium text-foreground">{averageContributors.toLocaleString()}</span> contributors.
+          </CardDescription>
+          <CardDescription>
+            The total number of contributors over this period was{" "}
+            <span className="font-medium text-foreground">{totalContributors.toLocaleString()}</span>.
+          </CardDescription>
+        </CardFooter>
       </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg md:text-xl">Cost vs Wage Development</CardTitle>
+
+      <Card className="w-full">
+        <CardHeader className="space-y-0 pb-2">
+          <CardDescription>Cost vs Wage Development</CardDescription>
+          <CardTitle className="text-2xl md:text-4xl tabular-nums">
+            {healthcareData[healthcareData.length - 1].costIndex}{" "}
+            <span className="text-sm font-normal tracking-normal text-muted-foreground">
+              cost index
+            </span>
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={healthcareData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year" />
-              <YAxis />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              <Bar dataKey="costIndex" fill="#8884d8" name="Cost Index" />
-              <Bar dataKey="wageIndex" fill="#82ca9d" name="Wage Index" />
-            </BarChart>
-          </ResponsiveContainer>
+          <ChartContainer
+            config={{
+              costIndex: {
+                label: "Cost Index",
+                color: "hsl(var(--chart-3))",
+              },
+              wageIndex: {
+                label: "Wage Index",
+                color: "hsl(var(--chart-4))",
+              },
+            }}
+          >
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart
+                data={healthcareData}
+                margin={{
+                  left: -4,
+                  right: -4,
+                }}
+              >
+                <XAxis
+                  dataKey="year"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={4}
+                />
+                <YAxis hide />
+                <Bar
+                  dataKey="costIndex"
+                  fill="var(--color-costIndex)"
+                  radius={[4, 4, 0, 0]}
+                  fillOpacity={0.6}
+                  activeBar={<Rectangle fillOpacity={0.8} />}
+                />
+                <Bar
+                  dataKey="wageIndex"
+                  fill="var(--color-wageIndex)"
+                  radius={[4, 4, 0, 0]}
+                  fillOpacity={0.6}
+                  activeBar={<Rectangle fillOpacity={0.8} />}
+                />
+                <ChartTooltip
+                  content={
+                    <ChartTooltipContent
+                      labelFormatter={(value) => `Year: ${value}`}
+                    />
+                  }
+                  cursor={false}
+                />
+                <ReferenceLine
+                  y={100}
+                  stroke="hsl(var(--muted-foreground))"
+                  strokeDasharray="3 3"
+                  strokeWidth={1}
+                >
+                  <Label
+                    position="insideBottomLeft"
+                    value="Base Index (2018)"
+                    offset={10}
+                    fill="hsl(var(--foreground))"
+                  />
+                  <Label
+                    position="insideTopLeft"
+                    value="100"
+                    className="text-lg"
+                    fill="hsl(var(--foreground))"
+                    offset={10}
+                    startOffset={100}
+                  />
+                </ReferenceLine>
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </CardContent>
-      </Card>
-      <Card className="col-span-1 md:col-span-2">
-        <CardHeader>
-          <CardTitle className="text-lg md:text-xl">Healthcare System Data</CardTitle>
-        </CardHeader>
-        <CardContent className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Year</TableHead>
-                <TableHead>Contributors</TableHead>
-                <TableHead>Recipients</TableHead>
-                <TableHead>Cost Index</TableHead>
-                <TableHead>Wage Index</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {healthcareData.map((row) => (
-                <TableRow key={row.year}>
-                  <TableCell>{row.year}</TableCell>
-                  <TableCell>{row.contributors.toLocaleString()}</TableCell>
-                  <TableCell>{row.recipients.toLocaleString()}</TableCell>
-                  <TableCell>{row.costIndex}</TableCell>
-                  <TableCell>{row.wageIndex}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
+        <CardFooter className="flex-col items-start gap-1">
+          <CardDescription>
+            The cost index has increased by{" "}
+            <span className="font-medium text-foreground">
+              {healthcareData[healthcareData.length - 1].costIndex - 100}%
+            </span> since 2018.
+          </CardDescription>
+          <CardDescription>
+            The wage index has increased by{" "}
+            <span className="font-medium text-foreground">
+              {healthcareData[healthcareData.length - 1].wageIndex - 100}%
+            </span> since 2018.
+          </CardDescription>
+        </CardFooter>
       </Card>
     </div>
   )
