@@ -2,6 +2,7 @@ import DeficitClock from '../components/DeficitClock'
 import DataDashboard from '../components/DataDashboard'
 import HealthcareFactCards from '@/components/HealthCareFactCards'
 import HealthcareYearComparison from '@/components/HealthCareYearComparison'
+import CallToActionQuote from '@/components/CallToAction'
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <div className="mb-8">
         <DeficitClock />
       </div>
+      <CallToActionQuote />
       <div className="mb-8">
         <HealthcareFactCards />
       </div>

@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 
 export default function DeficitClock({ initialDeficit = -1000000000, decayRate = 100 }) {
   const [deficit, setDeficit] = useState(initialDeficit)
-  const [isRunning, setIsRunning] = useState(false)
+  const [isRunning, setIsRunning] = useState(true) // Start the clock by default
   const [customDecayRate, setCustomDecayRate] = useState(decayRate)
 
   useEffect(() => {
@@ -16,12 +16,24 @@ export default function DeficitClock({ initialDeficit = -1000000000, decayRate =
 
     if (isRunning) {
       interval = setInterval(() => {
-        setDeficit(prevDeficit => prevDeficit - customDecayRate / 1000)
-      }, 1000)
+        setDeficit(prevDeficit => prevDeficit - customDecayRate) // Subtract customDecayRate directly
+      }, 1000) // Every second
     }
 
     return () => clearInterval(interval)
   }, [isRunning, customDecayRate])
+
+  const handleDecayRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    const numberValue = Number(value)
+
+    if (value === "" || isNaN(numberValue) || numberValue < 0) {
+      // Ignore invalid input (such as negative numbers or non-numeric values)
+      setCustomDecayRate(0)
+    } else {
+      setCustomDecayRate(numberValue)
+    }
+  }
 
   const formatDeficit = (value: number) => {
     const formatted = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.abs(value))
@@ -73,8 +85,9 @@ export default function DeficitClock({ initialDeficit = -1000000000, decayRate =
             id="decay-rate"
             type="number"
             value={customDecayRate}
-            onChange={(e) => setCustomDecayRate(Number(e.target.value))}
+            onChange={handleDecayRateChange}
             className="w-full sm:w-24 bg-gray-800 text-white border-gray-700 rounded-md"
+            min="0" // Ensure non-negative values in the input
           />
         </div>
       </CardContent>

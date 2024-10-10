@@ -3,35 +3,26 @@ export default function Impressum() {
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-bold mb-4">Impressum</h2>
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold">Angaben gemäß § 5 TMG</h3>
+          <p>Werter GmbH</p>
           <p>
-            Pflegeversicherung Reform GmbH<br />
-            Musterstraße 123<br />
-            12345 Berlin
+            Sonnenstr. 19 – Eingang 1<br />
+            80331 München<br />
+            Tel: +49. 89. 748486-50
           </p>
-          <h3 className="text-xl font-semibold">Vertreten durch</h3>
+          <h3 className="font-semibold">Verantwortlich:</h3>
           <p>
-            Max Mustermann, Geschäftsführer
+            Dr. Philipp Mauch<br />
+            Geschäftsführer: Dr. Philipp Mauch – HRB 269161, AG München – Gerichtsstand München – Steuernummer: 143/171/11127 – Ust-Id Nr: DE300454158
           </p>
-          <h3 className="text-xl font-semibold">Kontakt</h3>
+          <h3 className="text-xl font-semibold">Haftungsbeschränkung</h3>
           <p>
-            Telefon: +49 (0) 123 456789<br />
-            E-Mail: info@pflegereform.de
-          </p>
-          <h3 className="text-xl font-semibold">Registereintrag</h3>
-          <p>
-            Eintragung im Handelsregister.<br />
-            Registergericht: Amtsgericht Berlin<br />
-            Registernummer: HRB 123456
-          </p>
-          <h3 className="text-xl font-semibold">Haftungsausschluss</h3>
-          <p>
-            Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+            Der Anbieter hat die Inhalte sorgfältig geprüft, übernimmt aber keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der bereitgestellten Inhalte. Namentlich gekennzeichnete Beiträge geben die Meinung des jeweiligen Autors und nicht immer die Meinung des Anbieters wieder.
           </p>
           <p>
-            Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+            Diese Website enthält Verknüpfungen zu Websites Dritter (“externe Links”). Der Anbieter hat bei der erstmaligen Verknüpfung der externen Links die fremden Inhalte überprüft, ob etwaige Rechtsverstöße bestehen. Zu dem Zeitpunkt waren keine Rechtsverstöße ersichtlich. Bei Änderungen der unter dem Link zugänglichen Inhalte übernimmt der Anbieter keine Gewähr.
           </p>
         </div>
       </div>
     )
   }
+  
