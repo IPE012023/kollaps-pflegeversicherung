@@ -6,11 +6,13 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import CustomTooltip from "@/utils/CustomTooltip";
+import Link from "next/link";
 
 // Updated data for Pflegegrade 31.12.2023
 const chartData = [
@@ -120,6 +122,15 @@ export function CareByDegreeChart() {
           </PieChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter>
+          <Link className="text-sm"
+            href="https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/3_Downloads/Statistiken/Pflegeversicherung/Zahlen_und_Fakten/Zahlen-Fakten_Pflegeversicherung.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Quelle: Bundesgesundheitsministerium
+          </Link>
+        </CardFooter>
     </Card>
   );
 }
