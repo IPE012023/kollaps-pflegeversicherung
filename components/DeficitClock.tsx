@@ -24,26 +24,17 @@ export default function DeficitClock({ initialDeficit = -1000000000, decayRate =
   }, [isRunning, customDecayRate])
 
   const formatDeficit = (value: number) => {
-    const formatted = new Intl.NumberFormat('de-DE', { 
-      style: 'currency', 
-      currency: 'EUR', 
-      maximumFractionDigits: 0,
-      signDisplay: 'negative'
-    }).format(value)
+    const formatted = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.abs(value))
     return formatted.replace(/\s/g, '\u00A0') // Replace spaces with non-breaking spaces
   }
 
-  const [sign, billions, millions, thousands] = formatDeficit(deficit).split(/[-,.:]/).filter(Boolean)
+  const [billions, millions, thousands] = formatDeficit(deficit).split(/[,.:]/)
 
   return (
     <Card className="w-full max-w-2xl mx-auto bg-black p-4 rounded-lg shadow-lg">
       <CardContent>
         <div className="bg-gray-900 p-4 rounded-md mb-4">
           <div className="flex justify-center items-center space-x-2 font-mono text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-red-500">
-            <div className="relative">
-              <span className="absolute inset-0 text-gray-800 z-0">-</span>
-              <span className="relative z-10">{sign}</span>
-            </div>
             <div className="relative">
               <span className="absolute inset-0 text-gray-800 z-0">88</span>
               <span className="relative z-10">{billions}</span>
@@ -83,7 +74,7 @@ export default function DeficitClock({ initialDeficit = -1000000000, decayRate =
             type="number"
             value={customDecayRate}
             onChange={(e) => setCustomDecayRate(Number(e.target.value))}
-            className="w-full sm:w-32 bg-gray-800 text-white border-gray-700 rounded-md"
+            className="w-full sm:w-24 bg-gray-800 text-white border-gray-700 rounded-md"
           />
         </div>
       </CardContent>
