@@ -1,22 +1,14 @@
 "use client"
 
-import { Bar, BarChart, LabelList, XAxis, YAxis, Area, AreaChart, CartesianGrid } from "recharts"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { TrendingUp } from "lucide-react"
+import { Bar, BarChart, LabelList, XAxis, YAxis,} from "recharts"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ChartContainer} from "@/components/ui/chart"
+import { CareByDegreeChart } from "./CareByDegreeChart"
 
 const healthcareData = [
-  { year: 2021, contributors: 45100000, costIndex: 108 },
-  { year: 2022, contributors: 45300000, costIndex: 112 },
-]
-
-const areaChartData = [
-  { month: "January", contributors: 45000000, recipients: 73000000 },
-  { month: "February", contributors: 45100000, recipients: 73200000 },
-  { month: "March", contributors: 45200000, recipients: 73400000 },
-  { month: "April", contributors: 45150000, recipients: 73600000 },
-  { month: "May", contributors: 45250000, recipients: 73800000 },
-  { month: "June", contributors: 45300000, recipients: 74000000 },
+  { category: "Gesamt", oeffentlicheLeistungsbezieher: 5236586, privateLeistungsbezieher: 342743 },
+  { category: "Stationär", oeffentlicheLeistungsbezieher: 4393497, privateLeistungsbezieher: 285342 },
+  { category: "Ambulant", oeffentlicheLeistungsbezieher: 843089, privateLeistungsbezieher: 57401 },
 ]
 
 export default function HealthcareYearComparison() {
@@ -24,23 +16,23 @@ export default function HealthcareYearComparison() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <Card className="lg:col-span-1">
         <CardHeader>
-          <CardTitle>Contributors</CardTitle>
+          <CardTitle>Soziale Pflegeversicherung</CardTitle>
           <CardDescription>
-            The number of contributors has slightly increased compared to last year.
+            Die Anzahl der Leistungsbezieher der sozialen Pflegeversicherung fällt zu knapp 84% auf ambulante Pflegedienstleistungen (Stand: 2023).
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid auto-rows-min gap-2">
             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
-              {healthcareData[1].contributors.toLocaleString()}
+              {healthcareData[0].oeffentlicheLeistungsbezieher.toLocaleString()}
               <span className="text-sm font-normal text-muted-foreground">
-                contributors
+                Leistungsbezieher
               </span>
             </div>
             <ChartContainer
               config={{
-                contributors: {
-                  label: "Contributors",
+                oeffentlicheLeistungsbezieher: {
+                  label: "Leistungsbezieher",
                   color: "hsl(var(--chart-1))",
                 },
               }}
@@ -57,103 +49,41 @@ export default function HealthcareYearComparison() {
                 }}
                 data={[
                   {
-                    date: "2022",
-                    contributors: healthcareData[1].contributors,
+                    category: "Gesamt",
+                    oeffentlicheLeistungsbezieher: healthcareData[0].oeffentlicheLeistungsbezieher,
                   },
                 ]}
               >
                 <Bar
-                  dataKey="contributors"
-                  fill="var(--color-contributors)"
+                  dataKey="oeffentlicheLeistungsbezieher"
+                  fill="var(--color-oeffentlicheLeistungsbezieher)"
                   radius={4}
                   barSize={32}
                 >
                   <LabelList
                     position="insideLeft"
-                    dataKey="date"
+                    dataKey="category"
                     offset={8}
                     fontSize={12}
                     fill="white"
                   />
                 </Bar>
-                <YAxis dataKey="date" type="category" tickCount={1} hide />
-                <XAxis dataKey="contributors" type="number" hide />
-              </BarChart>
+                <YAxis dataKey="category" type="category" tickCount={1} hide />
+                <XAxis dataKey="value" type="number" hide domain={[0, healthcareData[0].oeffentlicheLeistungsbezieher]} />
+                </BarChart>
             </ChartContainer>
           </div>
           <div className="grid auto-rows-min gap-2">
             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
-              {healthcareData[0].contributors.toLocaleString()}
+              {healthcareData[1].oeffentlicheLeistungsbezieher.toLocaleString()}
               <span className="text-sm font-normal text-muted-foreground">
-                contributors
+                Leistungsbezieher
               </span>
             </div>
             <ChartContainer
               config={{
-                contributors: {
-                  label: "Contributors",
-                  color: "hsl(var(--muted))",
-                },
-              }}
-              className="aspect-auto h-[32px] w-full"
-            >
-              <BarChart
-                accessibilityLayer
-                layout="vertical"
-                margin={{
-                  left: 0,
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                }}
-                data={[
-                  {
-                    date: "2021",
-                    contributors: healthcareData[0].contributors,
-                  },
-                ]}
-              >
-                <Bar
-                  dataKey="contributors"
-                  fill="var(--color-contributors)"
-                  radius={4}
-                  barSize={32}
-                >
-                  <LabelList
-                    position="insideLeft"
-                    dataKey="date"
-                    offset={8}
-                    fontSize={12}
-                    fill="hsl(var(--muted-foreground))"
-                  />
-                </Bar>
-                <YAxis dataKey="date" type="category" tickCount={1} hide />
-                <XAxis dataKey="contributors" type="number" hide />
-              </BarChart>
-            </ChartContainer>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="lg:col-span-1">
-        <CardHeader>
-          <CardTitle>Cost Index</CardTitle>
-          <CardDescription>
-            The healthcare cost index has increased compared to last year.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className="grid auto-rows-min gap-2">
-            <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
-              {healthcareData[1].costIndex}
-              <span className="text-sm font-normal text-muted-foreground">
-                index points
-              </span>
-            </div>
-            <ChartContainer
-              config={{
-                costIndex: {
-                  label: "Cost Index",
+                oeffentlicheLeistungsbezieher: {
+                  label: "Leistungsbezieher",
                   color: "hsl(var(--chart-2))",
                 },
               }}
@@ -170,42 +100,42 @@ export default function HealthcareYearComparison() {
                 }}
                 data={[
                   {
-                    date: "2022",
-                    costIndex: healthcareData[1].costIndex,
+                    category: "Stationär",
+                    oeffentlicheLeistungsbezieher: healthcareData[1].oeffentlicheLeistungsbezieher,
                   },
                 ]}
               >
                 <Bar
-                  dataKey="costIndex"
-                  fill="var(--color-costIndex)"
+                  dataKey="oeffentlicheLeistungsbezieher"
+                  fill="var(--color-oeffentlicheLeistungsbezieher)"
                   radius={4}
                   barSize={32}
                 >
                   <LabelList
                     position="insideLeft"
-                    dataKey="date"
+                    dataKey="category"
                     offset={8}
                     fontSize={12}
                     fill="white"
                   />
                 </Bar>
-                <YAxis dataKey="date" type="category" tickCount={1} hide />
-                <XAxis dataKey="costIndex" type="number" hide />
-              </BarChart>
+                <YAxis dataKey="category" type="category" tickCount={1} hide />
+                <XAxis dataKey="value" type="number" hide domain={[0, healthcareData[0].oeffentlicheLeistungsbezieher]} />
+                </BarChart>
             </ChartContainer>
           </div>
           <div className="grid auto-rows-min gap-2">
             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
-              {healthcareData[0].costIndex}
+              {healthcareData[2].oeffentlicheLeistungsbezieher.toLocaleString()}
               <span className="text-sm font-normal text-muted-foreground">
-                index points
+                Leistungsbezieher
               </span>
             </div>
             <ChartContainer
               config={{
-                costIndex: {
-                  label: "Cost Index",
-                  color: "hsl(var(--muted))",
+                oeffentlicheLeistungsbezieher: {
+                  label: "Leistungsbezieher",
+                  color: "hsl(var(--chart-3))",
                 },
               }}
               className="aspect-auto h-[32px] w-full"
@@ -221,28 +151,28 @@ export default function HealthcareYearComparison() {
                 }}
                 data={[
                   {
-                    date: "2021",
-                    costIndex: healthcareData[0].costIndex,
+                    category: "Ambulant",
+                    oeffentlicheLeistungsbezieher: healthcareData[2].oeffentlicheLeistungsbezieher,
                   },
                 ]}
               >
                 <Bar
-                  dataKey="costIndex"
-                  fill="var(--color-costIndex)"
+                  dataKey="oeffentlicheLeistungsbezieher"
+                  fill="var(--color-oeffentlicheLeistungsbezieher)"
                   radius={4}
                   barSize={32}
                 >
                   <LabelList
                     position="insideLeft"
-                    dataKey="date"
+                    dataKey="category"
                     offset={8}
                     fontSize={12}
-                    fill="hsl(var(--muted-foreground))"
+                    fill="white"
                   />
                 </Bar>
-                <YAxis dataKey="date" type="category" tickCount={1} hide />
-                <XAxis dataKey="costIndex" type="number" hide />
-              </BarChart>
+                <YAxis dataKey="category" type="category" tickCount={1} hide />
+                <XAxis dataKey="value" type="number" hide domain={[0, healthcareData[0].oeffentlicheLeistungsbezieher]} />
+                </BarChart>
             </ChartContainer>
           </div>
         </CardContent>
@@ -250,99 +180,168 @@ export default function HealthcareYearComparison() {
 
       <Card className="lg:col-span-1">
         <CardHeader>
-          <CardTitle>Contributors vs Recipients</CardTitle>
+          <CardTitle>Private Pflegepflichtversicherung</CardTitle>
           <CardDescription>
-            Showing total contributors and recipients for the last 6 months
+          Die Anzahl der Leistungsbezieher der privaten Pflegepflichtversicherung fällt zu knapp 83% auf ambulante Pflegedienstleistungen (Stand: 2023).
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ChartContainer
-            config={{
-              contributors: {
-                label: "Contributors",
-                color: "hsl(var(--chart-1))",
-              },
-              recipients: {
-                label: "Recipients",
-                color: "hsl(var(--chart-2))",
-              },
-            }}
-          >
-            <AreaChart
-              accessibilityLayer
-              data={areaChartData}
-              margin={{
-                left: 12,
-                right: 12,
-              }}
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)}
-              />
-              <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-              <defs>
-                <linearGradient id="fillContributors" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="5%"
-                    stopColor="var(--color-contributors)"
-                    stopOpacity={0.8}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor="var(--color-contributors)"
-                    stopOpacity={0.1}
-                  />
-                </linearGradient>
-                <linearGradient id="fillRecipients" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="5%"
-                    stopColor="var(--color-recipients)"
-                    stopOpacity={0.8}
-                  />
-                  <stop
-                    offset="95%"
-                    stopColor="var(--color-recipients)"
-                    stopOpacity={0.1}
-                  />
-                </linearGradient>
-              </defs>
-              <Area
-                dataKey="contributors"
-                type="natural"
-                fill="url(#fillContributors)"
-                fillOpacity={0.4}
-                stroke="var(--color-contributors)"
-                stackId="a"
-              />
-              <Area
-                dataKey="recipients"
-                type="natural"
-                fill="url(#fillRecipients)"
-                fillOpacity={0.4}
-                stroke="var(--color-recipients)"
-                stackId="a"
-              />
-            </AreaChart>
-          </ChartContainer>
-        </CardContent>
-        <CardFooter>
-          <div className="flex w-full items-start gap-2 text-sm">
-            <div className="grid gap-2">
-              <div className="flex items-center gap-2 font-medium leading-none">
-                Recipients increasing by 1.4% this month <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="flex items-center gap-2 leading-none text-muted-foreground">
-                January - June 2022
-              </div>
+        <CardContent className="grid gap-4">
+          <div className="grid auto-rows-min gap-2">
+            <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
+              {healthcareData[1].privateLeistungsbezieher}
+              <span className="text-sm font-normal text-muted-foreground">
+                Leistungsbezieher
+              </span>
             </div>
+            <ChartContainer
+              config={{
+                privateLeistungsbezieher: {
+                  label: "Leistungsbeziher",
+                  color: "hsl(var(--chart-1))",
+                },
+              }}
+              className="aspect-auto h-[32px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                layout="vertical"
+                margin={{
+                  left: 0,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                }}
+                data={[
+                  {
+                    category: "Gesamt",
+                    privateLeistungsbezieher: healthcareData[0].privateLeistungsbezieher,
+                  },
+                ]}
+              >
+                <Bar
+                  dataKey="privateLeistungsbezieher"
+                  fill="var(--color-privateLeistungsbezieher)"
+                  radius={4}
+                  barSize={32}
+                >
+                  <LabelList
+                    position="insideLeft"
+                    dataKey="category"
+                    offset={8}
+                    fontSize={12}
+                    fill="white"
+                  />
+                </Bar>
+                <YAxis dataKey="category" type="category" tickCount={1} hide />
+                <XAxis dataKey="value" type="number" hide domain={[0, healthcareData[0].privateLeistungsbezieher]} />
+              </BarChart>
+            </ChartContainer>
           </div>
-        </CardFooter>
+          <div className="grid auto-rows-min gap-2">
+            <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
+              {healthcareData[1].privateLeistungsbezieher}
+              <span className="text-sm font-normal text-muted-foreground">
+                Leistungsbezieher
+              </span>
+            </div>
+            <ChartContainer
+              config={{
+                privateLeistungsbezieher: {
+                  label: "Leistungsbezieher",
+                  color: "hsl(var(--chart-2))",
+                },
+              }}
+              className="aspect-auto h-[32px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                layout="vertical"
+                margin={{
+                  left: 0,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                }}
+                data={[
+                  {
+                    category: "Stationär",
+                    privateLeistungsbezieher: healthcareData[1].privateLeistungsbezieher,
+                  },
+                ]}
+              >
+                <Bar
+                  dataKey="privateLeistungsbezieher"
+                  fill="var(--color-privateLeistungsbezieher)"
+                  radius={4}
+                  barSize={32}
+                >
+                  <LabelList
+                    position="insideLeft"
+                    dataKey="category"
+                    offset={8}
+                    fontSize={12}
+                    fill="white"
+                  />
+                </Bar>
+                <YAxis dataKey="category" type="category" tickCount={1} hide />
+                <XAxis dataKey="value" type="number" hide domain={[0, healthcareData[0].privateLeistungsbezieher]} />
+              </BarChart>
+            </ChartContainer>
+          </div>
+          <div className="grid auto-rows-min gap-2">
+            <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
+              {healthcareData[2].privateLeistungsbezieher}
+              <span className="text-sm font-normal text-muted-foreground">
+                Leistungsbezieher
+              </span>
+            </div>
+            <ChartContainer
+              config={{
+                privateLeistungsbezieher: {
+                  label: "Leistungsbezieher",
+                  color: "hsl(var(--chart-3))",
+                },
+              }}
+              className="aspect-auto h-[32px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                layout="vertical"
+                margin={{
+                  left: 0,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                }}
+                data={[
+                  {
+                    category: "Ambulant",
+                    privateLeistungsbezieher: healthcareData[2].privateLeistungsbezieher,
+                  },
+                ]}
+              >
+                <Bar
+                  dataKey="privateLeistungsbezieher"
+                  fill="var(--color-privateLeistungsbezieher)"
+                  radius={4}
+                  barSize={32}
+                >
+                  <LabelList
+                    position="insideLeft"
+                    dataKey="category"
+                    offset={8}
+                    fontSize={12}
+                    fill="white"
+                  />
+                </Bar>
+                <YAxis dataKey="category" type="category" tickCount={1} hide />
+                <XAxis dataKey="value" type="number" hide domain={[0, healthcareData[0].privateLeistungsbezieher]} />
+                </BarChart>
+            </ChartContainer>
+          </div>
+        </CardContent>
       </Card>
+      <CareByDegreeChart/>
     </div>
   )
 }
