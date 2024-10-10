@@ -61,7 +61,7 @@ export default function Kontakt() {
               <Link href="https://ipe-evaluation.de" target="_blank">
                 <div className="flex flex-col items-center transform hover:scale-105 transition-transform duration-300 ease-in-out hover:animate-jiggle">
                   <Image
-                    src="/ipe.svg"
+                    src="/ipe.png"
                     alt="IPE Logo"
                     width={200}
                     height={100}
