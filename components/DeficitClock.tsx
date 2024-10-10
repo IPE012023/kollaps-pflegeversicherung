@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export default function DeficitClock({ initialDeficit = -1000000000, decayRate = 100 }) {
+export default function DeficitClock({ initialDeficit = -1500000000, decayRate = 100000 }) {
   const [deficit, setDeficit] = useState(initialDeficit)
   const [isRunning, setIsRunning] = useState(true) // Start the clock by default
   const [customDecayRate, setCustomDecayRate] = useState(decayRate)
@@ -62,7 +62,7 @@ export default function DeficitClock({ initialDeficit = -1000000000, decayRate =
               <span className="relative z-10">{thousands}</span>
             </div>
           </div>
-          <div className="text-center text-gray-400 mt-2">Health Sector Deficit (€)</div>
+          <div className="text-center text-gray-400 mt-2">Defizit der Gesetzlichen Pflegevresicherung bis 2025 (in 1000 €)</div>
         </div>
         <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
           <Button 
@@ -76,11 +76,11 @@ export default function DeficitClock({ initialDeficit = -1000000000, decayRate =
             onClick={() => setDeficit(initialDeficit)} 
             className="w-full sm:w-auto border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white rounded-full"
           >
-            Reset
+            Zurücksetzen
           </Button>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2">
-          <Label htmlFor="decay-rate" className="w-full sm:w-auto text-gray-300">Decay Rate (€/s):</Label>
+          <Label htmlFor="decay-rate" className="w-full sm:w-auto text-gray-300">Anstieg (€/s):</Label>
           <Input
             id="decay-rate"
             type="number"

@@ -1,38 +1,98 @@
-"use client"
+"use client";
 
-import { Bar, BarChart, Rectangle, XAxis } from "recharts"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer } from "@/components/ui/chart"
+import { Bar, BarChart, Rectangle, XAxis } from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ChartContainer } from "@/components/ui/chart";
 
-const healthcareData = [
-  { year: 2018, contributors: 45000000, recipients: 73000000, costIndex: 100, wageIndex: 100, expenditure: 375.6, deficit: -3.5 },
-  { year: 2019, contributors: 45500000, recipients: 73500000, costIndex: 102, wageIndex: 101, expenditure: 402.8, deficit: -2.8 },
-  { year: 2020, contributors: 45200000, recipients: 74000000, costIndex: 105, wageIndex: 102, expenditure: 425.1, deficit: -5.2 },
-  { year: 2021, contributors: 45100000, recipients: 74500000, costIndex: 108, wageIndex: 103, expenditure: 441.7, deficit: -5.8 },
-  { year: 2022, contributors: 45300000, recipients: 75000000, costIndex: 112, wageIndex: 105, expenditure: 460.2, deficit: -6.7 },
-]
+interface HealthcareData {
+  year: number;
+  personen_gesamt: number;
+  ausgaben_gesamt: number;
+  finanzierungssaldo: number;
+  pflegesatz: number;
+}
+
+const healthcareData: HealthcareData[] = [
+  {
+    year: 2018,
+    personen_gesamt: 3685389,
+    ausgaben_gesamt: 41.27,
+    finanzierungssaldo: -3.55,
+    pflegesatz: 2.8,
+  },
+  {
+    year: 2019,
+    personen_gesamt: 3999755,
+    ausgaben_gesamt: 43.95,
+    finanzierungssaldo: 3.29,
+    pflegesatz: 3.3,
+  },
+  {
+    year: 2020,
+    personen_gesamt: 4322772,
+    ausgaben_gesamt: 49.08,
+    finanzierungssaldo: 1.54,
+    pflegesatz: 3.3,
+  },
+  {
+    year: 2021,
+    personen_gesamt: 4606490,
+    ausgaben_gesamt: 53.85,
+    finanzierungssaldo: -1.35,
+    pflegesatz: 3.3,
+  },
+  {
+    year: 2022,
+    personen_gesamt: 4875337,
+    ausgaben_gesamt: 60.03,
+    finanzierungssaldo: -2.25,
+    pflegesatz: 3.4,
+  },
+  {
+    year: 2023,
+    personen_gesamt: 5236586,
+    ausgaben_gesamt: 59.23,
+    finanzierungssaldo: 1.78,
+    pflegesatz: 4.0,
+  },
+  {
+    year: 2024,
+    personen_gesamt: 5236586,
+    ausgaben_gesamt: 59.23,
+    finanzierungssaldo: 1.5,
+    pflegesatz: 4.0,
+  },
+];
 
 export default function HealthcareFactCards() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <Card className="w-full">
         <CardHeader className="p-4 pb-0">
-          <CardTitle>Contributors</CardTitle>
+          <CardTitle>Anzahl Pflegebedürftiger</CardTitle>
           <CardDescription>
-            The number of people contributing to the healthcare system has remained relatively stable.
+            Die Anzahl Pflegebedürftiger nimmt rasant zu, in den letzten Jahren mit einem mittleren sechstelligen Betrag. 2023 lag der Zuwachs bei 300.000 Menschen.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-row items-baseline justify-between p-4 pt-2">
           <div className="flex items-baseline gap-2 text-2xl sm:text-3xl font-bold tabular-nums leading-none">
-            {healthcareData[healthcareData.length - 1].contributors.toLocaleString()}
+            {healthcareData[
+              healthcareData.length - 1
+            ].personen_gesamt.toLocaleString()}
             <span className="text-xs sm:text-sm font-normal text-muted-foreground">
-              people
+              Menschen
             </span>
           </div>
           <ChartContainer
             config={{
-              contributors: {
-                label: "Contributors",
+                personen_gesamt: {
+                label: "Pflegebedürftige",
                 color: "hsl(var(--chart-1))",
               },
             }}
@@ -44,8 +104,8 @@ export default function HealthcareFactCards() {
               data={healthcareData}
             >
               <Bar
-                dataKey="contributors"
-                fill="var(--color-contributors)"
+                dataKey="personen_gesamt"
+                fill="var(--color-personen_gesamt)"
                 radius={2}
                 fillOpacity={0.2}
                 activeIndex={4}
@@ -59,22 +119,24 @@ export default function HealthcareFactCards() {
 
       <Card className="w-full">
         <CardHeader className="p-4 pb-0">
-          <CardTitle>Recipients</CardTitle>
+          <CardTitle>Gesamtausgaben 2023</CardTitle>
           <CardDescription>
-            The number of healthcare recipients has been steadily increasing over the years.
+            Die Ausgaben in der Pflege sind in den letzten Jahren immer weiter angestiegen. Treiber waren höhere Kosten aber auch hohe Tarifabschlüsse.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-row items-baseline justify-between p-4 pt-2">
           <div className="flex items-baseline gap-2 text-2xl sm:text-3xl font-bold tabular-nums leading-none">
-            {healthcareData[healthcareData.length - 1].recipients.toLocaleString()}
+            {healthcareData[
+              healthcareData.length - 1
+            ].ausgaben_gesamt.toLocaleString()}
             <span className="text-xs sm:text-sm font-normal text-muted-foreground">
-              people
+              Mrd. Euro
             </span>
           </div>
           <ChartContainer
             config={{
-              recipients: {
-                label: "Recipients",
+                ausgaben_gesamt: {
+                label: "Gesamtausgaben",
                 color: "hsl(var(--chart-2))",
               },
             }}
@@ -86,11 +148,11 @@ export default function HealthcareFactCards() {
               data={healthcareData}
             >
               <Bar
-                dataKey="recipients"
-                fill="var(--color-recipients)"
+                dataKey="ausgaben_gesamt"
+                fill="var(--color-ausgaben_gesamt)"
                 radius={2}
                 fillOpacity={0.2}
-                activeIndex={4}
+                activeIndex={6}
                 activeBar={<Rectangle fillOpacity={0.8} />}
               />
               <XAxis dataKey="year" hide />
@@ -101,23 +163,23 @@ export default function HealthcareFactCards() {
 
       <Card className="w-full">
         <CardHeader className="p-4 pb-0">
-          <CardTitle>Healthcare Expenditure</CardTitle>
+          <CardTitle>Prognose Beitragsatz 2025</CardTitle>
           <CardDescription>
-            Total healthcare expenditure has been rising steadily, putting pressure on the system.
+            Die paritätisch getragenen Pflegebeiträge sind in den letzten Jahren kräftig gestiegen und
+            belasten Arbeitnehmer und Arbeitgeber bereits deutlich.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-row items-baseline justify-between p-4 pt-2">
           <div className="flex items-baseline gap-2 text-2xl sm:text-3xl font-bold tabular-nums leading-none">
-            {healthcareData[healthcareData.length - 1].expenditure.toFixed(1)}
+            4.3
             <span className="text-xs sm:text-sm font-normal text-muted-foreground">
-              billion €
-            
+              Prozent
             </span>
           </div>
           <ChartContainer
             config={{
-              expenditure: {
-                label: "Expenditure",
+              pflegesatz: {
+                label: "Pflegebeitragssatz",
                 color: "hsl(var(--chart-3))",
               },
             }}
@@ -129,8 +191,8 @@ export default function HealthcareFactCards() {
               data={healthcareData}
             >
               <Bar
-                dataKey="expenditure"
-                fill="var(--color-expenditure)"
+                dataKey="pflegesatz"
+                fill="var(--color-pflegesatz)"
                 radius={2}
                 fillOpacity={0.2}
                 activeIndex={4}
@@ -144,22 +206,25 @@ export default function HealthcareFactCards() {
 
       <Card className="w-full">
         <CardHeader className="p-4 pb-0">
-          <CardTitle>System Deficit</CardTitle>
+          <CardTitle>Prognostiziertes Defizit 2024</CardTitle>
           <CardDescription>
-            The healthcare system&apos;s deficit has been growing, indicating increasing financial strain.
+            Der Spitzenverband der gesetzlichen Krankenkassen geht von einem
+            Minus von 1,5 Mrd. Euro 2024 und 3.4 Mrd. Euro 2025 aus.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-row items-baseline justify-between p-4 pt-2">
           <div className="flex items-baseline gap-2 text-2xl sm:text-3xl font-bold tabular-nums leading-none">
-            {Math.abs(healthcareData[healthcareData.length - 1].deficit).toFixed(1)}
+            {Math.abs(
+              healthcareData[healthcareData.length - 1].finanzierungssaldo
+            ).toFixed(1)}
             <span className="text-xs sm:text-sm font-normal text-muted-foreground">
-              billion € deficit
+              Mrd. € Defizit
             </span>
           </div>
           <ChartContainer
             config={{
-              deficit: {
-                label: "Deficit",
+              finanzierungssaldo: {
+                label: "Defizit",
                 color: "hsl(var(--chart-4))",
               },
             }}
@@ -168,11 +233,14 @@ export default function HealthcareFactCards() {
             <BarChart
               accessibilityLayer
               margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
-              data={healthcareData.map(d => ({ ...d, absDeficit: Math.abs(d.deficit) }))}
+              data={healthcareData.map((d) => ({
+                ...d,
+                absDeficit: Math.abs(d.finanzierungssaldo),
+              }))}
             >
               <Bar
                 dataKey="absDeficit"
-                fill="var(--color-deficit)"
+                fill="var(--color-finanzierungssaldo)"
                 radius={2}
                 fillOpacity={0.2}
                 activeIndex={4}
@@ -184,5 +252,5 @@ export default function HealthcareFactCards() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
