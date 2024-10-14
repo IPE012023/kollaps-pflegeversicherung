@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Anleitung zum Weiterentwicklen
 
-## Getting Started
+## Installation NPM (falls nicht erfolgt)
 
-First, run the development server:
+Im Windows-CMD folgenden Befehl ausführen
+
+```bash
+npm install -g npm
+```
+
+## Klonen des Projects von Github
+
+Per CMD an die Stelle navigieren, an der der Code gespeichert werden soll (Off-OneDrive!)
+
+```bash
+cd "C:\Users\BENUTZER\Documents"
+
+git clone https://github.com/IPE012023/kollaps-pflegeversicherung.git
+```
+
+## Ausführen in VSCode (beim ersten Start)
+VSCode öffnen, und den Ordner "kollaps-pflegeversicherung" öffnen.
+Bei erstmaligen Starten folgenden Befehl ausführen:
+
+```bash
+npm install
+```
+
+## Zum Starten der App
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+startet eine lokale Entwicklungsumgebung der Seite auf [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Repository
 
-## Learn More
+Das Repository liegt unter [Repository](https://github.com/IPE012023/kollaps-pflegeversicherung)
 
-To learn more about Next.js, take a look at the following resources:
+Änderungen wie gewohnt hinzufügen und committen mit
+```bash
+git add .
+git commit -m "Message"
+```
+dann (wenn keine Fehler/rote Warnings in irgendwelchen Files sind)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git push -origin
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+Die Seite ist aktuell über Vercel deployed, deployment erfolgt für gewöhnlich automatisch nach Veröffentlichung bei Github.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Achtung: Enthält der Code Fehler, scheitert das Deployment. Daher immer bevor 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+auf remote gepusht wird:
+
+```bash
+npm run build
+```
+
+laufen lassen. Gibt es hier Fehler oder Type-Warnings müssen diese zuerst (am besten mit ChatGPT) beseitigt werden.
+
+Falls doch auf Vercel zugegriffen werden muss:
+
+Die Zugangsdaten sind mein (Inés) Github-Username:
+
+    IPE012023 und das PW: Ipe_2023!
+
+Selbiges wird auch benötigt, falls ihr Euch bei Vercel/Github einloggen wollt. Falls Ihr einen 2FA-Code braucht: 110894 
+
+
+
+
