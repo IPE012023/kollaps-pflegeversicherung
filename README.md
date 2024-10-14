@@ -70,8 +70,21 @@ Die Zugangsdaten sind mein (Inés) Github-Username:
 
     IPE012023 und das PW: Ipe_2023!
 
-Selbiges wird auch benötigt, falls ihr Euch bei Vercel/Github einloggen wollt. Falls Ihr einen 2FA-Code braucht: 110894 
+Selbiges wird auch benötigt, falls ihr Euch bei Vercel/Github einloggen wollt. Falls Ihr einen 2FA-Code braucht: 110894
 
+# Zum Code
+
+## Generelles
+
+Das Projekt ist in Komponenten organisiert, die folgende Struktur haben:
+
+Im app-folder liegt die layout.tsx und die page.tsx die die Root-Struktur der App bilden. Der Inhalt der page.tsx wird aufgerufen wenn man die Seite auf "https://kollaps-pflegeversicherung.vercel.app/" bzw. "http://localhost:3000" aufruft. Die drei Ordner enthalten sogennante routes, bspw. gelangt man zum Impressum über http://localhost:3000/impressum bzw. https://kollaps-pflegeversicherung.vercel.app/impressum .
+
+Jeder Route-Folder muss auch eine page.tsx enthalten.
+
+Der Rest der App ist mittels Komponenten organisiert. In jede page.tsx werden einzelne Komponenten geladen, bzw. die Komponente, die die Schuldenuhr darstellt.
+
+Die einzelnen Komponenten mit den Daten für das Dashboard finden sich ebenfalls im Komponenten Ordner. 
 
 
 
