@@ -72,7 +72,7 @@ Die Zugangsdaten sind mein (Inés) Github-Username:
 
 Selbiges wird auch benötigt, falls ihr Euch bei Vercel/Github einloggen wollt. Falls Ihr einen 2FA-Code braucht: 110894
 
-# Zum Code
+# Zum Code (bitte Readme.md öffnen, nicht völlständig hier angezeigt)
 
 ## Generelles
 
@@ -82,9 +82,21 @@ Im app-folder liegt die layout.tsx und die page.tsx die die Root-Struktur der Ap
 
 Jeder Route-Folder muss auch eine page.tsx enthalten.
 
-Der Rest der App ist mittels Komponenten organisiert. In jede page.tsx werden einzelne Komponenten geladen, bzw. die Komponente, die die Schuldenuhr darstellt.
+Der Rest der App ist mittels Komponenten organisiert. In jede page.tsx werden einzelne Komponenten geladen, bzw. die Komponente, die die Schuldenuhr darstellt. Auf der page.tsx unter /impressum wird eine *Impressum.tsx*-Komponente geladen, die allen Inhalt des Impressums enthält.
 
 Die einzelnen Komponenten mit den Daten für das Dashboard finden sich ebenfalls im Komponenten Ordner. 
 
+## Anpassung des Dashboards
 
+Ich habe versucht, die Komponenten möglichst aussagekräftig zu benennen.
 
+ - Kopf- und Fußleiste sind *Header.tsx* und *Footer.tsx* (Achtung, diese sind in der app/layout.tsx eigebunden, da sie jeweils unten bzw. oben in der gesamten App auf jedem Route sichtbar sein sollen.)
+ - Die Schuldenuhr wird in *DeficitClock.tsx* gebaut. Änderung am Aussehen oder der Logik dahinter sind dann hier vorzunehmen.
+ - *DataDashboard.tsx* enhält die unteren beiden Bar-Charts, die jeweiligen Daten dazu befinden sich relativ weit oben in der Komponente
+ - Der Call-To-Action, also das Zitat und Bild von Philipp Mauch sind in der *CallToAction.tsx*-Komponente angesiedelt.
+ - Die kleinen Fact-Container befinden sich unter *HealthCareFactCards.tsx*, Daten ebenfalls wieder am Anfang der Komponente.
+ - Die mittleren Charts bzw. der Doughnut-Chart sind in *HealthCareYearComparison.tsx* und (wird aus dieser Komponente aufgerufen) *CareByDegreeChart.tsx* (der Doughnut-Chart)
+
+## Speicherort der Bilder
+
+Bilder liegen im **public**-Ordner des root-Verzeichnisses. 
