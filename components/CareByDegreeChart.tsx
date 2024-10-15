@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { Label, Pie, PieChart } from "recharts";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer, ChartTooltip } from "@/components/ui/chart";
-import CustomTooltip from "@/utils/CustomTooltip";
 import Link from "next/link";
+import CustomTooltip from "./CustomTooltip";
 
 interface ChartData {
   name: string;
