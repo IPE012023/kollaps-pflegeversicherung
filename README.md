@@ -92,9 +92,9 @@ Ich habe versucht, die Komponenten möglichst aussagekräftig zu benennen.
 
  - Kopf- und Fußleiste sind *Header.tsx* und *Footer.tsx* (Achtung, diese sind in der app/layout.tsx eigebunden, da sie jeweils unten bzw. oben in der gesamten App auf jedem Route sichtbar sein sollen.)
  - Die Schuldenuhr wird in *DeficitClock.tsx* gebaut. Änderung am Aussehen oder der Logik dahinter sind dann hier vorzunehmen.
- - *DataDashboard.tsx* enhält die unteren beiden Bar-Charts, die jeweiligen Daten dazu befinden sich relativ weit oben in der Komponente
+ - *DataDashboard.tsx* enhält die unteren beiden Bar-Charts, die jeweiligen Daten dazu befinden sich im data-Ordner.
  - Der Call-To-Action, also das Zitat und Bild von Philipp Mauch sind in der *CallToAction.tsx*-Komponente angesiedelt.
- - Die kleinen Fact-Container befinden sich unter *HealthCareFactCards.tsx*, Daten ebenfalls wieder am Anfang der Komponente.
+ - Die kleinen Fact-Container befinden sich unter *HealthCareFactCards.tsx*, Daten ebenfalls wieder im data-Ordnre.
  - Die mittleren Charts bzw. der Doughnut-Chart sind in *HealthCareYearComparison.tsx* und (wird aus dieser Komponente aufgerufen) *CareByDegreeChart.tsx* (der Doughnut-Chart)
 
 ## Speicherort der Bilder
@@ -105,3 +105,7 @@ Bilder liegen im **public**-Ordner des root-Verzeichnisses.
 
 Die Vorlagen für die Grafik-Komponenten kommen von [ShadCN](https://ui.shadcn.com/charts). Zum Austausch einer Grafik,
 etwa um einen Barchart gegen einen Linechart zu tauschen die Komponente auswählen, Code kopieren und zusammen mit dem existierenden Code in ChatGPT zum Umbau geben.
+
+## Meta Data
+
+Die *Layout.tsx* und die einzelnen route-Pages enthalten zusammen mit der Datei in utils/const-metadata.ts umfangreiche Metadaten-Infos und Links zu Bildern, die beim Teilen des/der Page-Links in Sozialen Netzwerken angezeigt werden. Für Feinheiten bitte hier nachlesen: [Twitter Card](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image)
