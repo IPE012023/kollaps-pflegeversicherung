@@ -99,4 +99,9 @@ Ich habe versucht, die Komponenten möglichst aussagekräftig zu benennen.
 
 ## Speicherort der Bilder
 
-Bilder liegen im **public**-Ordner des root-Verzeichnisses. 
+Bilder liegen im **public**-Ordner des root-Verzeichnisses.
+
+## UI Library
+
+Die Vorlagen für die Grafik-Komponenten kommen von [ShadCN](https://ui.shadcn.com/charts). Zum Austausch einer Grafik,
+etwa um einen Barchart gegen einen Linechart zu tauschen die Komponente auswählen, Code kopieren und zusammen mit dem existierenden Code in ChatGPT zum Umbau geben.
