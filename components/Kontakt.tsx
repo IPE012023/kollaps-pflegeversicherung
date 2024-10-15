@@ -35,8 +35,8 @@ export default function Kontakt() {
               <Link href="https://werther.com" target="_blank">
                 <div className="flex flex-col items-center transform hover:scale-105 transition-transform duration-300 ease-in-out hover:animate-jiggle">
                   <Image
-                    src="/werther.png"
-                    alt="Werther Logo"
+                    src="/werter.png"
+                    alt="Werter Logo"
                     width={200}
                     height={100}
                     className="mb-2 w-full h-auto max-w-[200px]"

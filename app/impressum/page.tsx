@@ -8,14 +8,14 @@ export const metadata = {
   openGraph: {
     ...baseMetadata.openGraph,
     title: "Impressum - Pflegeversicherung Reform",
-    description: "Alle rechtlichen Hinweise zur Pflegeversicherung Reform.",
+    description: "Alle rechtlichen Hinweise zur Seite Reform Pflegeversicherung.",
     url: "https://kollaps-pflegeversicherung.vercel.app/impressum",
     images: [
       {
-        url: "https://kollaps-pflegeversicherung.vercel.app/images/impressum.jpg",
-        width: 800,
-        height: 600,
-        alt: "Impressum Pflegeversicherung",
+        url: "https://kollaps-pflegeversicherung.vercel.app/werter.png",
+        width: 778,
+        height: 318,
+        alt: "Impressum Reform Pflegeversicherung",
       },
     ],
   },
@@ -23,7 +23,7 @@ export const metadata = {
     ...baseMetadata.twitter,
     title: "Impressum - Pflegeversicherung Reform",
     description: "Rechtliche Hinweise für die Pflegeversicherung Reform.",
-    images: ["https://kollaps-pflegeversicherung.vercel.app/images/twitter-impressum.jpg"],
+    images: ["https://kollaps-pflegeversicherung.vercel.app/werter.png"],
   },
 };
 
