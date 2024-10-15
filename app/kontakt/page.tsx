@@ -12,7 +12,7 @@ export const metadata = {
     url: "https://kollaps-pflegeversicherung.vercel.app/kontakt",
     images: [
       {
-        url: "https://kollaps-pflegeversicherung.vercel.app/images/kontakt.jpg",
+        url: "https://kollaps-pflegeversicherung.vercel.app/images/kontakt.png",
         width: 800,
         height: 600,
         alt: "Kontakt Pflegeversicherung",
@@ -23,7 +23,7 @@ export const metadata = {
     ...baseMetadata.twitter,
     title: "Kontakt - Pflegeversicherung Reform",
     description: "Kontaktieren Sie uns, um mehr über die Pflegeversicherung Reform zu erfahren.",
-    images: ["https://kollaps-pflegeversicherung.vercel.app/images/twitter-kontakt.jpg"],
+    images: ["https://kollaps-pflegeversicherung.vercel.app/images/kontakt.png"],
   },
 };
 
