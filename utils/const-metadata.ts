@@ -14,7 +14,7 @@ export const baseMetadata = {
     },
     twitter: {
       card: "summary_large_image",
-      images: ["https://yourwebsite.com/images/twitter-image.jpg"], // Fallback image URL
+      images: ["https://kollaps-pflegeversicherung.vercel.app/images/kollaps.jpg"], // Fallback image URL
     },
   };
   
