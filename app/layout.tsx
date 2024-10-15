@@ -36,6 +36,12 @@ export default function RootLayout({
           property="og:url"
           content="https://kollaps-pflegeversicherung.vercel.app/"
         />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:image"
+          content="https://kollaps-pflegeversicherung.vercel.app/images/kollaps.jpg"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
         <ThemeProvider
