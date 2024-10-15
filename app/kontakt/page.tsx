@@ -13,8 +13,8 @@ export const metadata = {
     images: [
       {
         url: "https://kollaps-pflegeversicherung.vercel.app/images/kontakt.png",
-        width: 800,
-        height: 600,
+        width: 729,
+        height: 416,
         alt: "Kontakt Pflegeversicherung",
       },
     ],
