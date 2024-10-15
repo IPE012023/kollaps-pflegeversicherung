@@ -24,6 +24,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface HealthcareData {
   year: number;
@@ -33,52 +34,18 @@ interface HealthcareData {
   liquide_mittel: number;
 }
 
-const healthcareData: HealthcareData[] = [
-  {
-    year: 2018,
-    einnahmen_gesamt: 37.72,
-    ausgaben_gesamt: 41.27,
-    finanzierungssaldo: -3.55,
-    liquide_mittel: 3.4,
-  },
-  {
-    year: 2019,
-    einnahmen_gesamt: 47.24,
-    ausgaben_gesamt: 43.95,
-    finanzierungssaldo: 3.29,
-    liquide_mittel: 6.7,
-  },
-  {
-    year: 2020,
-    einnahmen_gesamt: 50.62,
-    ausgaben_gesamt: 49.08,
-    finanzierungssaldo: 1.54,
-    liquide_mittel: 8.2,
-  },
-  {
-    year: 2021,
-    einnahmen_gesamt: 52.5,
-    ausgaben_gesamt: 53.85,
-    finanzierungssaldo: -1.35,
-    liquide_mittel: 6.9,
-  },
-  {
-    year: 2022,
-    einnahmen_gesamt: 57.78,
-    ausgaben_gesamt: 60.03,
-    finanzierungssaldo: -2.25,
-    liquide_mittel: 5.6,
-  },
-  {
-    year: 2023,
-    einnahmen_gesamt: 61.01,
-    ausgaben_gesamt: 59.23,
-    finanzierungssaldo: 1.78,
-    liquide_mittel: 6.9,
-  },
-];
-
 export default function DataDashboard() {
+  const [healthcareData, setHealthcareData] = useState<HealthcareData[]>([]);
+
+  // Fetching the data from the JSON file
+  useEffect(() => {
+    fetch("/data/budget_data.json")
+      .then((response) => response.json())
+      .then((data) => setHealthcareData(data));
+  }, []);
+
+  if (healthcareData.length === 0) return <div>Loading...</div>;
+
   const averageEinnahmen = Math.round(
     healthcareData.reduce((sum, data) => sum + data.einnahmen_gesamt, 0) /
       healthcareData.length
@@ -177,7 +144,8 @@ export default function DataDashboard() {
           </ChartContainer>
         </CardContent>
         <CardFooter>
-          <Link className="text-sm"
+          <Link
+            className="text-sm"
             href="https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/3_Downloads/Statistiken/Pflegeversicherung/Zahlen_und_Fakten/Zahlen-Fakten_Pflegeversicherung.pdf"
             target="_blank"
             rel="noopener noreferrer"
@@ -193,7 +161,8 @@ export default function DataDashboard() {
             Finanzierungssaldo und Liquide Mittel zum Jahresende
           </CardDescription>
           <CardTitle className="text-2xl md:text-4xl tabular-nums">
-            {healthcareData[healthcareData.length - 1].finanzierungssaldo}{" Mrd. Euro (2023) "}
+            {healthcareData[healthcareData.length - 1].finanzierungssaldo}{" "}
+            Mrd. Euro (2023){" "}
             <span className="text-sm font-normal tracking-normal text-muted-foreground">
               Finanzierungssaldo
             </span>
@@ -254,7 +223,8 @@ export default function DataDashboard() {
           </ChartContainer>
         </CardContent>
         <CardFooter>
-          <Link className="text-sm"
+          <Link
+            className="text-sm"
             href="https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/3_Downloads/Statistiken/Pflegeversicherung/Zahlen_und_Fakten/Zahlen-Fakten_Pflegeversicherung.pdf"
             target="_blank"
             rel="noopener noreferrer"

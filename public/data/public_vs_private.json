@@ -1,0 +1,18 @@
+[
+    {
+      "category": "Gesamt",
+      "oeffentlicheLeistungsbezieher": 5236586,
+      "privateLeistungsbezieher": 342743
+    },
+    {
+      "category": "Stationär",
+      "oeffentlicheLeistungsbezieher": 4393497,
+      "privateLeistungsbezieher": 285342
+    },
+    {
+      "category": "Ambulant",
+      "oeffentlicheLeistungsbezieher": 843089,
+      "privateLeistungsbezieher": 57401
+    }
+  ]
+  

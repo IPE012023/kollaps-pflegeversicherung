@@ -1,0 +1,8 @@
+[
+    { "name": "Pflegegrad 1", "value": 778824, "percentage": "17.7%", "fill": "#FF9F40" },
+    { "name": "Pflegegrad 2", "value": 1922210, "percentage": "43.8%", "fill": "#FF6384" },
+    { "name": "Pflegegrad 3", "value": 1212017, "percentage": "27.6%", "fill": "#36A2EB" },
+    { "name": "Pflegegrad 4", "value": 367023, "percentage": "8.4%", "fill": "#FFCE56" },
+    { "name": "Pflegegrad 5", "value": 113423, "percentage": "2.6%", "fill": "#4BC0C0" }
+  ]
+  

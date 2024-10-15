@@ -1,0 +1,52 @@
+[
+    {
+      "year": 2018,
+      "personen_gesamt": 3685389,
+      "ausgaben_gesamt": 41.27,
+      "finanzierungssaldo": -3.55,
+      "pflegesatz": 2.8
+    },
+    {
+      "year": 2019,
+      "personen_gesamt": 3999755,
+      "ausgaben_gesamt": 43.95,
+      "finanzierungssaldo": 3.29,
+      "pflegesatz": 3.3
+    },
+    {
+      "year": 2020,
+      "personen_gesamt": 4322772,
+      "ausgaben_gesamt": 49.08,
+      "finanzierungssaldo": 1.54,
+      "pflegesatz": 3.3
+    },
+    {
+      "year": 2021,
+      "personen_gesamt": 4606490,
+      "ausgaben_gesamt": 53.85,
+      "finanzierungssaldo": -1.35,
+      "pflegesatz": 3.3
+    },
+    {
+      "year": 2022,
+      "personen_gesamt": 4875337,
+      "ausgaben_gesamt": 60.03,
+      "finanzierungssaldo": -2.25,
+      "pflegesatz": 3.4
+    },
+    {
+      "year": 2023,
+      "personen_gesamt": 5236586,
+      "ausgaben_gesamt": 59.23,
+      "finanzierungssaldo": 1.78,
+      "pflegesatz": 4.0
+    },
+    {
+      "year": 2024,
+      "personen_gesamt": 5236586,
+      "ausgaben_gesamt": 59.23,
+      "finanzierungssaldo": 1.5,
+      "pflegesatz": 4.0
+    }
+  ]
+  
