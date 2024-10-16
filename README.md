@@ -39,6 +39,12 @@ startet eine lokale Entwicklungsumgebung der Seite auf [http://localhost:3000](h
 
 Das Repository liegt unter [Repository](https://github.com/IPE012023/kollaps-pflegeversicherung)
 
+Aktueller Repository-Stand:
+
+```bash
+git pull -origin
+```
+
 Änderungen wie gewohnt hinzufügen und committen mit
 ```bash
 git add .
