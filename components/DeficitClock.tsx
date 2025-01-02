@@ -56,17 +56,18 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
   return (
     <div className="p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="w-full border-4">
+        <Card className="w-full border-4 flex flex-col justify-between">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Krankenversicherung (GKV)</CardTitle>
             <CardDescription>
               Jährliches Defizit von 9,3 Mrd.€ (2022)
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-row items-baseline justify-between p-4 pt-2">
-            <div className="bg-[#000000] bottom w-full p-2 rounded-md mb-2 border-4 border-gray-800">
+          <div className="flex-grow"></div>
+          <CardContent className="flex flex-row items-baseline justify-end p-2 pt-2">
+            <div className="bg-[#000000] w-full p-2 rounded-md mb-2 border-4 border-gray-800">
               <div className="flex justify-center items-center space-x-2 font-mono text-xl sm:text-xl md:text-xl lg:text-xl text-[#ff0000] font-bold" style={{ textShadow: '0 0 10px #ff0000' }}>
-                <div className="relative bg-[#220000] px-2 py-1 rounded">
+                <div className="relative bg-[#000000] px-2 py-1 rounded">
                   <span className="relative z-10">{Math.round(deficitGKV).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} €</span>
                 </div>
               </div>
@@ -74,17 +75,18 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
           </CardContent>
         </Card>
 
-        <Card className="w-full border-4">
+        <Card className="w-full border-4 flex flex-col justify-between">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Pflegeversicherung (GPV)</CardTitle>
             <CardDescription>
               Jährliches Defizit von 47,7 Mrd.€ (2022)
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-row items-baseline justify-between p-4 pt-2">
-            <div className="bg-[#000000] bottom w-full p-2 rounded-md mb-2 border-4 border-gray-800">
+          <div className="flex-grow"></div>
+          <CardContent className="flex flex-row items-baseline justify-end p-2 pt-2">
+            <div className="bg-[#000000] w-full p-2 rounded-md mb-2 border-4 border-gray-800">
               <div className="flex justify-center items-center space-x-2 font-mono text-xl sm:text-xl md:text-xl lg:text-xl text-[#ff0000] font-bold" style={{ textShadow: '0 0 10px #ff0000' }}>
-                <div className="relative bg-[#220000] px-2 py-1 rounded">
+                <div className="relative bg-[#000000] px-2 py-1 rounded">
                   <span className="relative z-10">{Math.round(deficitGPV).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} €</span>
                 </div>
               </div>
@@ -92,17 +94,18 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
           </CardContent>
         </Card>
 
-        <Card className="w-full border-4">
+        <Card className="w-full border-4 flex flex-col justify-between">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Rentenversicherung (GRV)</CardTitle>
             <CardDescription>
               Jährliches Defizit von 1,5 Mrd.€ (2024)
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-row items-baseline justify-between p-4 pt-2">
-            <div className="bg-[#000000] bottom w-full p-2 rounded-md mb-2 border-4 border-gray-800">
+          <div className="flex-grow"></div>
+          <CardContent className="flex flex-row items-baseline justify-end p-2 pt-2">
+            <div className="bg-[#000000] w-full p-2 rounded-md mb-2 border-4 border-gray-800">
               <div className="flex justify-center items-center space-x-2 font-mono text-xl sm:text-xl md:text-xl lg:text-xl text-[#ff0000] font-bold" style={{ textShadow: '0 0 10px #ff0000' }}>
-                <div className="relative bg-[#220000] px-2 py-1 rounded">
+                <div className="relative bg-[#000000] px-2 py-1 rounded">
                   <span className="relative z-10">{(Math.round(deficitGRV)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} €</span>
                 </div>
               </div>
@@ -110,17 +113,18 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
           </CardContent>
         </Card>
 
-        <Card className="w-full border-4">
+        <Card className="w-full border-4 flex flex-col justify-between">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Arbeitslosenversicherung (GAV)</CardTitle>
             <CardDescription>
               Jährliches Defizit von 3,4 Mrd.€ (2024)
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-row items-baseline justify-between p-4 pt-2">
-            <div className="bg-[#000000] bottom w-full p-2 rounded-md mb-2 border-4 border-gray-800">
+          <div className="flex-grow"></div>
+          <CardContent className="flex flex-row items-baseline justify-end p-2 pt-2">
+            <div className="bg-[#000000] w-full p-2 rounded-md mb-2 border-4 border-gray-800">
               <div className="flex justify-center items-center space-x-2 font-mono text-xl sm:text-xl md:text-xl lg:text-xl text-[#ff0000] font-bold" style={{ textShadow: '0 0 10px #ff0000' }}>
-                <div className="relative bg-[#220000] px-2 py-1 rounded">
+                <div className="relative bg-[#000000] px-2 py-1 rounded">
                   <span className="relative z-10">{Math.round(deficitGAV).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} €</span>
                 </div>
               </div>
@@ -129,11 +133,11 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
         </Card>
       </div>
       <div className="p-4">
-      <Card className="w-full max-w-2xl mx-auto bg-black p-4 rounded-lg shadow-lg border-4 border-gray-700">
+      <Card className="w-full max-w-4xl mx-auto bg-black p-4 rounded-lg shadow-lg border-4 border-gray-700">
         <CardContent className="p-0">
           <div className="bg-[#000000] p-4 rounded-md mb-4 border-8 border-gray-800">
             <div className="flex justify-center items-center space-x-2 font-mono text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#ff0000] font-bold" style={{ textShadow: '0 0 10px #ff0000' }}>
-              <div className="relative bg-[#220000] px-2 py-1 rounded">
+              <div className="relative bg-[#000000] px-2 py-1 rounded">
                 <span className="relative z-10">{Math.round(deficit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} €</span>
               </div>
             </div>
