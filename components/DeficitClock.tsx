@@ -3,21 +3,20 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+
 
 export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.155, increaseRateGKV = 101.4019, increaseRateGPV = 47.5321, increaseRateGRV = 1511.5219, increaseRateGAV = 294.6992}) {
   const [deficit, setDeficit] = useState(initialDeficit)
   const [isRunning, setIsRunning] = useState(false)
   const [customIncreaseRate, setCustomIncreaseRate] = useState(increaseRate)
   const [deficitGKV, setDeficitGKV] = useState(initialDeficit)
-  const [customIncreaseRateGKV, setCustomIncreaseRateGKV] = useState(increaseRateGKV)
+  const [customIncreaseRateGKV] = useState(increaseRateGKV)
   const [deficitGPV, setDeficitGPV] = useState(initialDeficit)
-  const [customIncreaseRateGPV, setCustomIncreaseRateGPV] = useState(increaseRateGPV)
+  const [customIncreaseRateGPV] = useState(increaseRateGPV)
   const [deficitGRV, setDeficitGRV] = useState(initialDeficit)
-  const [customIncreaseRateGRV, setCustomIncreaseRateGRV] = useState(increaseRateGRV)
+  const [customIncreaseRateGRV] = useState(increaseRateGRV)
   const [deficitGAV, setDeficitGAV] = useState(initialDeficit)
-  const [customIncreaseRateGAV, setCustomIncreaseRateGAV] = useState(increaseRateGAV)
+  const [customIncreaseRateGAV] = useState(increaseRateGAV)
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -35,6 +34,7 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
     return () => clearInterval(interval)
   }, [isRunning, customIncreaseRate])
 
+  /*
   const handleIncreaseRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     const numberValue = Number(value)
@@ -45,18 +45,16 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
       setCustomIncreaseRate(numberValue)
     }
   }
-
+  */
   const formatDeficit = (value: number) => {
     const formatted = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.abs(value))
     return formatted.replace(/\s/g, '\u00A0')
   }
 
-  const [billions, millions, thousands] = formatDeficit(deficit).split(/[,.:]/)
-
   return (
     <div className="p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="w-full border-4 flex flex-col justify-between">
+        <Card className="w-full border-4 flex flex-col justify-between shadow-lg">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Krankenversicherung (GKV)</CardTitle>
             <CardDescription>
@@ -75,7 +73,7 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
           </CardContent>
         </Card>
 
-        <Card className="w-full border-4 flex flex-col justify-between">
+        <Card className="w-full border-4 flex flex-col justify-between shadow-lg">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Pflegeversicherung (GPV)</CardTitle>
             <CardDescription>
@@ -94,7 +92,7 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
           </CardContent>
         </Card>
 
-        <Card className="w-full border-4 flex flex-col justify-between">
+        <Card className="w-full border-4 flex flex-col justify-between shadow-lg">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Rentenversicherung (GRV)</CardTitle>
             <CardDescription>
@@ -113,7 +111,7 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
           </CardContent>
         </Card>
 
-        <Card className="w-full border-4 flex flex-col justify-between">
+        <Card className="w-full border-4 flex flex-col justify-between shadow-lg">
           <CardHeader className="p-4 pb-0">
             <CardTitle>Arbeitslosenversicherung (GAV)</CardTitle>
             <CardDescription>
@@ -133,9 +131,9 @@ export default function DeficitClock({ initialDeficit = 0, increaseRate = 1955.1
         </Card>
       </div>
       <div className="p-4">
-      <Card className="w-full max-w-4xl mx-auto bg-black p-4 rounded-lg shadow-lg border-4 border-gray-700">
+      <Card className="w-full max-w-4xl mx-auto p-4 rounded-lg shadow-lg border-4">
         <CardContent className="p-0">
-          <div className="bg-[#000000] p-4 rounded-md mb-4 border-8 border-gray-800">
+          <div className="p-4 bg-[#000000] rounded-md mb-4 border-8 border-gray-800">
             <div className="flex justify-center items-center space-x-2 font-mono text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#ff0000] font-bold" style={{ textShadow: '0 0 10px #ff0000' }}>
               <div className="relative bg-[#000000] px-2 py-1 rounded">
                 <span className="relative z-10">{Math.round(deficit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} €</span>

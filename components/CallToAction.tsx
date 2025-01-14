@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function CallToActionQuote() {
   return (
-    <div className="my-12 p-10 rounded-lg shadow-lg container mx-auto flex flex-col md:flex-row items-center md:items-start gap-8 border-4 border-gray-800 max-w-full">
+    <div className="my-12 p-10 rounded-lg shadow-lg container mx-auto flex flex-col md:flex-row items-center md:items-start gap-8 border-4 max-w-full">
       {/* Image container */}
       <div className="flex-shrink-0 md:w-[250px] md:h-[250px]">
         <Image
