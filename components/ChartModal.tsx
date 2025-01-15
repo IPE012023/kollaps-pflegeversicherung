@@ -1,48 +1,40 @@
-"use client";
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { LineChart, CartesianGrid, Line, XAxis, Tooltip, YAxis } from "recharts";
+import { LineChartComponent } from "./LineChart";
 
-interface ChartModalProps {
+function ChartModal({
+  isOpen,
+  onClose,
+  title,
+  subtitle,
+  data,
+  color,
+  yAxisLabel,
+}: {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  data: Array<{ year: number; value: number }>;
-}
-
-export function ChartModal({ isOpen, onClose, title, data }: ChartModalProps) {
+  subtitle?: string;
+  data: { year: number; value: number }[];
+  color: string;
+  yAxisLabel?: string;
+}) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="dark:bg-[hsl(var(--card))] dark:text-[hsl(var(--card-foreground))]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <div className="mt-4">
-          <LineChart
-            width={500}
-            height={300}
+          <LineChartComponent
             data={data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 10,
-              bottom: 10,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" />
-            <YAxis />
-            <Tooltip />
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke="#ff0000"
-              activeDot={{ r: 8 }}
-              dot={{ fill: "#ff0000", r: 4 }}
-            />
-          </LineChart>
+            color={color}
+            yAxisLabel={yAxisLabel}
+            subtitle={subtitle}
+          />
         </div>
       </DialogContent>
     </Dialog>
   );
 }
+
+export default ChartModal;

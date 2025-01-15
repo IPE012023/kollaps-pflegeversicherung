@@ -11,15 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import {
-  LineChart,
-  CartesianGrid,
-  Line,
-  XAxis,
-  Tooltip,
-  YAxis,
-  ResponsiveContainer,
-} from "recharts";
+import { LineChart, CartesianGrid, Line, XAxis, Tooltip, YAxis, ResponsiveContainer } from "recharts";
 
 type ChartDataKey = "GKV" | "GPV" | "GRV" | "GAV";
 
@@ -32,25 +24,25 @@ const chartData: Record<ChartDataKey, { year: number; value: number }[]> = {
     { year: 2023, value: 288.62 },
   ],
   GPV: [
-    { year: 2019, value: 100 },
-    { year: 2020, value: 120 },
-    { year: 2021, value: 140 },
-    { year: 2022, value: 160 },
-    { year: 2023, value: 180 },
+    { year: 2019, value: 43.95 },
+    { year: 2020, value: 49.08 },
+    { year: 2021, value: 53.85 },
+    { year: 2022, value: 60.03 },
+    { year: 2023, value: 59.23 },
   ],
   GRV: [
-    { year: 2019, value: 50 },
-    { year: 2020, value: 60 },
-    { year: 2021, value: 70 },
-    { year: 2022, value: 80 },
-    { year: 2023, value: 90 },
+    { year: 2019, value: 324.8 },
+    { year: 2020, value: 338.3 },
+    { year: 2021, value: 346.5 },
+    { year: 2022, value: 359.6 },
+    { year: 2023, value: 379.8 },
   ],
   GAV: [
-    { year: 2019, value: 200 },
-    { year: 2020, value: 220 },
-    { year: 2021, value: 240 },
-    { year: 2022, value: 260 },
-    { year: 2023, value: 280 },
+    { year: 2019, value: 33.2 },
+    { year: 2020, value: 61.0 },
+    { year: 2021, value: 57.6 },
+    { year: 2022, value: 37.5 },
+    { year: 2023, value: 39.2 },
   ],
 };
 
@@ -65,20 +57,25 @@ function ChartModal({
   isOpen,
   onClose,
   title,
+  subtitle,
   data,
   color,
+  yAxisLabel,
 }: {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  subtitle?: string;
   data: { year: number; value: number }[];
   color: string;
+  yAxisLabel?: string;
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="dark:bg-[hsl(var(--card))] dark:text-[hsl(var(--card-foreground))]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
+          {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
         </DialogHeader>
         <div className="mt-4">
           <ResponsiveContainer width="100%" height={300}>
@@ -102,6 +99,13 @@ function ChartModal({
                 tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
+                label={{
+                  value: yAxisLabel,
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "hsl(var(--foreground))",
+                  fontSize: 12,
+                }}
               />
               <Tooltip
                 contentStyle={{
@@ -149,11 +153,20 @@ export default function DeficitClock({
     { year: number; value: number }[]
   >([]);
   const [selectedChartColor, setSelectedChartColor] = useState("");
+  const [selectedSubtitle, setSelectedSubtitle] = useState("");
+  const [selectedYAxisLabel, setSelectedYAxisLabel] = useState("Mill. Euro");
 
-  const openChartModal = (title: string, dataKey: ChartDataKey) => {
+  const openChartModal = (
+    title: string,
+    dataKey: ChartDataKey,
+    subtitle: string,
+    yAxisLabel: string
+  ) => {
     setSelectedChartTitle(title);
     setSelectedChartData(chartData[dataKey]);
     setSelectedChartColor(chartColors[dataKey]);
+    setSelectedSubtitle(subtitle);
+    setSelectedYAxisLabel(yAxisLabel);
     setChartOpen(true);
   };
 
@@ -162,6 +175,8 @@ export default function DeficitClock({
     setSelectedChartTitle("");
     setSelectedChartData([]);
     setSelectedChartColor("");
+    setSelectedSubtitle("");
+    setSelectedYAxisLabel("Mill. Euro");
   };
 
   useEffect(() => {
@@ -196,40 +211,58 @@ export default function DeficitClock({
             description: "Jährliches Defizit von 9,3 Mrd.€ (2022)",
             dataKey: "GKV",
             value: deficitGKV,
+            subtitle: "Ausgabenentwicklung, 2019-2023",
+            yAxisLabel: "Mrd. Euro",
           },
           {
             title: "Pflegeversicherung (GPV)",
             description: "Jährliches Defizit von 47,7 Mrd.€ (2022)",
             dataKey: "GPV",
             value: deficitGPV,
+            subtitle: "Ausgabenentwicklung, 2019-2023",
+            yAxisLabel: "Mrd. Euro",
           },
           {
             title: "Rentenversicherung (GRV)",
             description: "Jährliches Defizit von 1,5 Mrd.€ (2024)",
             dataKey: "GRV",
             value: deficitGRV,
+            subtitle: "Ausgabenentwicklung, 2019-2023",
+            yAxisLabel: "Mrd. Euro",
           },
           {
             title: "Arbeitslosenversicherung (GAV)",
             description: "Jährliches Defizit von 3,4 Mrd.€ (2024)",
             dataKey: "GAV",
             value: deficitGAV,
+            subtitle: "Ausgabenentwicklung, 2019-2023",
+            yAxisLabel: "Mrd. Euro",
           },
         ].map((card, index) => (
           <Card
             key={index}
             className="w-full border-4 flex flex-col justify-between shadow-lg cursor-pointer"
-            onClick={() => openChartModal(card.title, card.dataKey as ChartDataKey)}
+            onClick={() =>
+              openChartModal(
+                card.title,
+                card.dataKey as ChartDataKey,
+                card.subtitle,
+                card.yAxisLabel
+              )
+            }
           >
             <CardHeader className="p-4 pb-0">
               <CardTitle>{card.title}</CardTitle>
               <CardDescription>{card.description}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-row items-baseline justify-end p-2 pt-2">
-              <div className="bg-[#000000] w-full p-2 rounded-md mb-2 border-4 border-gray-800">
+              <div
+                className="bg-[hsl(var(--muted))] w-full p-2 rounded-md mb-2 border-4"
+                style={{ borderColor: "hsl(var(--border))" }}
+              >
                 <div
-                  className="flex justify-center items-center space-x-2 font-mono text-xl text-[#ff0000] font-bold"
-                  style={{ textShadow: "0 0 10px #ff0000" }}
+                  className="flex justify-center items-center space-x-2 font-mono text-xl font-bold"
+                  style={{ color: "hsl(var(--foreground))" }}
                 >
                   <span>
                     {Math.round(card.value)
@@ -248,8 +281,10 @@ export default function DeficitClock({
         isOpen={isChartOpen}
         onClose={closeChartModal}
         title={selectedChartTitle}
+        subtitle={selectedSubtitle}
         data={selectedChartData}
         color={selectedChartColor}
+        yAxisLabel={selectedYAxisLabel}
       />
 
       {/* Große Uhr */}
@@ -263,12 +298,12 @@ export default function DeficitClock({
               >
                 <div className="relative bg-[#000000] px-2 py-1 rounded">
                   <span className="relative z-10">
-                  {Math.round(deficit)
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
-                  €
-                </span>
-              </div>
+                    {Math.round(deficit)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                    €
+                  </span>
+                </div>
               </div>
               <div className="text-center text-[#ffffff] text-sm mt-2">
                 <span className="font-semibold">Quelle:</span>{" "}
