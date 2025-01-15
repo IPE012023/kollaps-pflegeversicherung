@@ -9,6 +9,89 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { LineChart, CartesianGrid, Line, XAxis, Tooltip, YAxis } from "recharts";
+
+type ChartDataKey = "GKV" | "GPV" | "GRV" | "GAV";
+
+const chartData: Record<ChartDataKey, { year: number; value: number }[]> = {
+  GKV: [
+    { year: 2019, value: 239.49 },
+    { year: 2020, value: 248.88 },
+    { year: 2021, value: 263.41 },
+    { year: 2022, value: 274.23 },
+    { year: 2023, value: 288.62 },
+  ],
+  GPV: [
+    { year: 2019, value: 100 },
+    { year: 2020, value: 120 },
+    { year: 2021, value: 140 },
+    { year: 2022, value: 160 },
+    { year: 2023, value: 180 },
+  ],
+  GRV: [
+    { year: 2019, value: 50 },
+    { year: 2020, value: 60 },
+    { year: 2021, value: 70 },
+    { year: 2022, value: 80 },
+    { year: 2023, value: 90 },
+  ],
+  GAV: [
+    { year: 2019, value: 200 },
+    { year: 2020, value: 220 },
+    { year: 2021, value: 240 },
+    { year: 2022, value: 260 },
+    { year: 2023, value: 280 },
+  ],
+};
+
+function ChartModal({
+  isOpen,
+  onClose,
+  title,
+  data,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  data: { year: number; value: number }[];
+}) {
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        <div className="mt-4">
+          <LineChart
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 10,
+              bottom: 10,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" />
+            <YAxis />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke="#ff0000"
+              activeDot={{ r: 8 }}
+              dot={{ fill: "#ff0000", r: 4 }}
+            />
+          </LineChart>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default function DeficitClock({
   initialDeficit = 0,
@@ -20,61 +103,85 @@ export default function DeficitClock({
 }) {
   const [deficit, setDeficit] = useState(initialDeficit);
   const [isRunning, setIsRunning] = useState(false);
-  const [customIncreaseRate] = useState(increaseRate);
   const [deficitGKV, setDeficitGKV] = useState(initialDeficit);
-  const [customIncreaseRateGKV] = useState(increaseRateGKV);
   const [deficitGPV, setDeficitGPV] = useState(initialDeficit);
-  const [customIncreaseRateGPV] = useState(increaseRateGPV);
   const [deficitGRV, setDeficitGRV] = useState(initialDeficit);
-  const [customIncreaseRateGRV] = useState(increaseRateGRV);
   const [deficitGAV, setDeficitGAV] = useState(initialDeficit);
-  const [customIncreaseRateGAV] = useState(increaseRateGAV);
+  const [isChartOpen, setChartOpen] = useState(false);
+  const [selectedChartTitle, setSelectedChartTitle] = useState("");
+  const [selectedChartData, setSelectedChartData] = useState<
+    { year: number; value: number }[]
+  >([]);
+
+  const openChartModal = (title: string, dataKey: ChartDataKey) => {
+    setSelectedChartTitle(title);
+    setSelectedChartData(chartData[dataKey]);
+    setChartOpen(true);
+  };
+
+  const closeChartModal = () => {
+    setChartOpen(false);
+    setSelectedChartTitle("");
+    setSelectedChartData([]);
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
     if (isRunning) {
       interval = setInterval(() => {
-        setDeficit((prevDeficit) => prevDeficit + customIncreaseRate);
-        setDeficitGKV((prevDeficit) => prevDeficit + customIncreaseRateGKV);
-        setDeficitGPV((prevDeficit) => prevDeficit + customIncreaseRateGPV);
-        setDeficitGRV((prevDeficit) => prevDeficit + customIncreaseRateGRV);
-        setDeficitGAV((prevDeficit) => prevDeficit + customIncreaseRateGAV);
+        setDeficit((prevDeficit) => prevDeficit + increaseRate);
+        setDeficitGKV((prevDeficit) => prevDeficit + increaseRateGKV);
+        setDeficitGPV((prevDeficit) => prevDeficit + increaseRateGPV);
+        setDeficitGRV((prevDeficit) => prevDeficit + increaseRateGRV);
+        setDeficitGAV((prevDeficit) => prevDeficit + increaseRateGAV);
       }, 1000);
     }
 
     return () => clearInterval(interval);
   }, [
     isRunning,
-    customIncreaseRate,
-    customIncreaseRateGKV,
-    customIncreaseRateGPV,
-    customIncreaseRateGRV,
-    customIncreaseRateGAV,
+    increaseRate,
+    increaseRateGKV,
+    increaseRateGPV,
+    increaseRateGRV,
+    increaseRateGAV,
   ]);
 
   return (
-    <div className="p-4">
+    <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Karten */}
-        {[{
-          title: "Krankenversicherung (GKV)",
-          description: "Jährliches Defizit von 9,3 Mrd.€ (2022)",
-          value: deficitGKV
-        }, {
-          title: "Pflegeversicherung (GPV)",
-          description: "Jährliches Defizit von 47,7 Mrd.€ (2022)",
-          value: deficitGPV
-        }, {
-          title: "Rentenversicherung (GRV)",
-          description: "Jährliches Defizit von 1,5 Mrd.€ (2024)",
-          value: deficitGRV
-        }, {
-          title: "Arbeitslosenversicherung (GAV)",
-          description: "Jährliches Defizit von 3,4 Mrd.€ (2024)",
-          value: deficitGAV
-        }].map((card, index) => (
-          <Card key={index} className="w-full border-4 flex flex-col justify-between shadow-lg">
+        {[
+          {
+            title: "Krankenversicherung (GKV)",
+            description: "Jährliches Defizit von 9,3 Mrd.€ (2022)",
+            dataKey: "GKV",
+            value: deficitGKV,
+          },
+          {
+            title: "Pflegeversicherung (GPV)",
+            description: "Jährliches Defizit von 47,7 Mrd.€ (2022)",
+            dataKey: "GPV",
+            value: deficitGPV,
+          },
+          {
+            title: "Rentenversicherung (GRV)",
+            description: "Jährliches Defizit von 1,5 Mrd.€ (2024)",
+            dataKey: "GRV",
+            value: deficitGRV,
+          },
+          {
+            title: "Arbeitslosenversicherung (GAV)",
+            description: "Jährliches Defizit von 3,4 Mrd.€ (2024)",
+            dataKey: "GAV",
+            value: deficitGAV,
+          },
+        ].map((card, index) => (
+          <Card
+            key={index}
+            className="w-full border-4 flex flex-col justify-between shadow-lg cursor-pointer"
+            onClick={() => openChartModal(card.title, card.dataKey as ChartDataKey)}
+          >
             <CardHeader className="p-4 pb-0">
               <CardTitle>{card.title}</CardTitle>
               <CardDescription>{card.description}</CardDescription>
@@ -85,14 +192,12 @@ export default function DeficitClock({
                   className="flex justify-center items-center space-x-2 font-mono text-xl text-[#ff0000] font-bold"
                   style={{ textShadow: "0 0 10px #ff0000" }}
                 >
-                  <div className="relative bg-[#000000] px-2 py-1 rounded">
-                    <span className="relative z-10">
-                      {Math.round(card.value)
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
-                      €
-                    </span>
-                  </div>
+                  <span>
+                    {Math.round(card.value)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                    €
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -100,9 +205,16 @@ export default function DeficitClock({
         ))}
       </div>
 
+      <ChartModal
+        isOpen={isChartOpen}
+        onClose={closeChartModal}
+        title={selectedChartTitle}
+        data={selectedChartData}
+      />
+
       {/* Große Uhr */}
       <div className="mt-8">
-        <Card className="w-full lg:max-w-[calc(100%-2rem)] mx-auto border-4 rounded-lg shadow-lg">
+        <Card className="w-full mx-auto border-4 rounded-lg shadow-lg">
           <CardContent className="p-4">
             <div className="p-4 bg-[#000000] rounded-md mb-4 border-8 border-gray-800">
               <div
@@ -119,7 +231,14 @@ export default function DeficitClock({
                 </div>
               </div>
               <div className="text-center text-[#ffffff] text-sm mt-2">
-                Quelle: ...
+                <span className="font-semibold">Quelle:</span>{" "}
+                <Link
+                  href="https://www.bundesfinanzministerium.de/Content/DE/Downloads/Broschueren_Bestellservice/tragfaehigkeitsbericht-2024.pdf?__blob=publicationFile&v=4"
+                  aria-label="6. Tragfähigkeitsbericht, 2024: Projektionen zur langfristigen Tragfähigkeit der öffentlichen Finanzen"
+                >
+                  6. Tragfähigkeitsbericht des Bundesministeriums der Finanzen
+                  (2024)
+                </Link>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
@@ -139,7 +258,7 @@ export default function DeficitClock({
                   setDeficitGAV(initialDeficit);
                   setIsRunning(false);
                 }}
-                className="w-full sm:w-auto border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white rounded-full font-bold text-lg"
+                className="w-full sm:w-auto border-gray-600 text-gray-800 hover:bg-gray-700 hover:text-white rounded-full font-bold text-lg"
               >
                 Zurücksetzen
               </Button>

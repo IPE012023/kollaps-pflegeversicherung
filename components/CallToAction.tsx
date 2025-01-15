@@ -19,7 +19,7 @@ export default function CallToActionQuote() {
         <blockquote className="text-xl md:text-2xl font-semibold italic leading-relaxed">
           &quot;Die Finanzierung der Sozialversicherungen ist leider ein Randthema - aber zugleich eine tickende Zeitbombe: Denn die finanziellen Dimensionen sind enorm und die Konsequenzen von Einschnitten für Bürgerinnen und Bürger deutlich spürbar. Verständlich, dass hier niemand ins politische Risiko gehen und Herausforderungen offen ansprechen will. Aber spätestens die nächste Bundesregierung wird sich mit diesem Thema offen und ehrlich auseinandersetzen müssen.&quot;
         </blockquote>
-        <p className="mt-6 text-lg font-medium">– Dr. Philipp Mauch, <span className='italic'>Managing Partner bei Pivot Regulatory und Werter GmbH</span></p>
+        <p className="mt-6 text-lg font-medium">– Dr. Philipp Mauch, <span className='italic'>Managing Partner bei Pivot Regulatory und CEO Werter GmbH</span></p>
       </div>
     </div>
   );
