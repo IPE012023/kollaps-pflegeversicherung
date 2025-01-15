@@ -11,7 +11,15 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { LineChart, CartesianGrid, Line, XAxis, Tooltip, YAxis } from "recharts";
+import {
+  LineChart,
+  CartesianGrid,
+  Line,
+  XAxis,
+  Tooltip,
+  YAxis,
+  ResponsiveContainer,
+} from "recharts";
 
 type ChartDataKey = "GKV" | "GPV" | "GRV" | "GAV";
 
@@ -46,47 +54,75 @@ const chartData: Record<ChartDataKey, { year: number; value: number }[]> = {
   ],
 };
 
+const chartColors: Record<ChartDataKey, string> = {
+  GKV: "hsl(var(--chart-1))",
+  GPV: "hsl(var(--chart-2))",
+  GRV: "hsl(var(--chart-3))",
+  GAV: "hsl(var(--chart-4))",
+};
+
 function ChartModal({
   isOpen,
   onClose,
   title,
   data,
+  color,
 }: {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   data: { year: number; value: number }[];
+  color: string;
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="dark:bg-[hsl(var(--card))] dark:text-[hsl(var(--card-foreground))]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <div className="mt-4">
-          <LineChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 10,
-              bottom: 10,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" />
-            <YAxis />
-            <Tooltip />
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke="#ff0000"
-              activeDot={{ r: 8 }}
-              dot={{ fill: "#ff0000", r: 4 }}
-            />
-          </LineChart>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart
+              data={data}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis
+                dataKey="year"
+                tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
+                axisLine={false}
+                tickLine={false}
+              />
+              <YAxis
+                tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "hsl(var(--card))",
+                  color: "hsl(var(--foreground))",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                }}
+                itemStyle={{ color }}
+                cursor={{ stroke: color, strokeWidth: 2 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke={color}
+                strokeWidth={3}
+                dot={{ fill: color, r: 4 }}
+                activeDot={{ r: 8 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </DialogContent>
     </Dialog>
@@ -112,10 +148,12 @@ export default function DeficitClock({
   const [selectedChartData, setSelectedChartData] = useState<
     { year: number; value: number }[]
   >([]);
+  const [selectedChartColor, setSelectedChartColor] = useState("");
 
   const openChartModal = (title: string, dataKey: ChartDataKey) => {
     setSelectedChartTitle(title);
     setSelectedChartData(chartData[dataKey]);
+    setSelectedChartColor(chartColors[dataKey]);
     setChartOpen(true);
   };
 
@@ -123,6 +161,7 @@ export default function DeficitClock({
     setChartOpen(false);
     setSelectedChartTitle("");
     setSelectedChartData([]);
+    setSelectedChartColor("");
   };
 
   useEffect(() => {
@@ -210,6 +249,7 @@ export default function DeficitClock({
         onClose={closeChartModal}
         title={selectedChartTitle}
         data={selectedChartData}
+        color={selectedChartColor}
       />
 
       {/* Große Uhr */}
@@ -223,12 +263,12 @@ export default function DeficitClock({
               >
                 <div className="relative bg-[#000000] px-2 py-1 rounded">
                   <span className="relative z-10">
-                    {Math.round(deficit)
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
-                    €
-                  </span>
-                </div>
+                  {Math.round(deficit)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                  €
+                </span>
+              </div>
               </div>
               <div className="text-center text-[#ffffff] text-sm mt-2">
                 <span className="font-semibold">Quelle:</span>{" "}
@@ -244,7 +284,7 @@ export default function DeficitClock({
             <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
               <Button
                 onClick={() => setIsRunning(!isRunning)}
-                className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white rounded-full font-bold text-lg"
+                className="w-full sm:w-auto bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] rounded-full font-bold text-lg"
               >
                 {isRunning ? "Stop" : "Start"}
               </Button>
@@ -258,7 +298,7 @@ export default function DeficitClock({
                   setDeficitGAV(initialDeficit);
                   setIsRunning(false);
                 }}
-                className="w-full sm:w-auto border-gray-600 text-gray-800 hover:bg-gray-700 hover:text-white rounded-full font-bold text-lg"
+                className="w-full sm:w-auto border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] hover:text-[hsl(var(--foreground))] rounded-full font-bold text-lg"
               >
                 Zurücksetzen
               </Button>
